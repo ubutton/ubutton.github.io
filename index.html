@@ -1,5 +1,25 @@
 <html>
-  <body>
+	<head>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+		<script>
+			// ref: http://www.w3schools.com/JQuery/jquery_hide_show.asp
+			$(document).ready(function(){
+			    $("#hide").click(function(){
+			        $("p").hide();
+			    });
+			    $("#show").click(function(){
+			        $("p").show();
+			    });
+			});
+		</script>
+	</head>
+<body>
+
+	<p>If you click on the "Hide" button, I will disappear.</p>
+
+	<button id="hide">Hide</button>
+	<button id="show">Show</button>
+
     <p>Hello World! its ubutton</p>
     <h1>This is kaya's edit</h1>
     <h1>This is Kyle's edit</h1>
