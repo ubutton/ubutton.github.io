@@ -10,6 +10,8 @@ function buttonClicked(){
 	//	entry point of this js
 	//	will first convertAddress, buildHTML, and change layout + displayMap
 
+
+	displayMap(37.419938, -122.083479, "Atom Cafe, Charleston Road, Mountain View, CA", "map-canvas")
 }
 
 function displayError(errorMessage){
@@ -31,6 +33,26 @@ function buildHTML(templateFile, lat, lng, stringAddress){
 }
 
 function displayMap(lat, lng, divID){
+	displayMap(lat, lng, "", divID);
+}
+
+function displayMap(lat, lng, stringAddress, divID){
 	//this function display a map in the divID
+	function initialize(lat, lng, stringAddress, divID) {
+		var myLatlng = new google.maps.LatLng(lat,lng);
+		var mapOptions = {
+			zoom: 18,
+			center: myLatlng
+		}
+
+		var map = new google.maps.Map(document.getElementById(divID), mapOptions);
+
+		var marker = new google.maps.Marker({
+			position: myLatlng,
+			map: map,
+			title: stringAddress
+		});
+	}
+	google.maps.event.addDomListener(window, 'load', initialize(lat, lng, stringAddress, divID));
 }
 

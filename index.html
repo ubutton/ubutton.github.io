@@ -1,6 +1,9 @@
 <html>
 	<head>
+		<link rel="stylesheet" type="text/css" href="css/index.css">
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+		<script src="js/index.js"></script>
 		<script>
 			// ref: http://www.w3schools.com/JQuery/jquery_hide_show.asp
 			$(document).ready(function(){
@@ -15,13 +18,20 @@
 	</head>
 <body>
 
-	<p>If you click on the "Hide" button, I will disappear.</p>
+	<p>If you click on the "Hide" button, I will disappear.
+
+	</p>
 
 	<button id="hide">Hide</button>
 	<button id="show">Show</button>
+	<button id="showmap" onclick="buttonClicked()">Show Map</button>
+
 
     <p>Hello World! its ubutton</p>
     <h1>This is kaya's edit</h1>
     <h1>This is Kyle's edit</h1>
+
+
+	<div id="map-canvas"></div>
   </body>
 </html>
