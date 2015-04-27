@@ -46,6 +46,7 @@ function convertAddress(stringAddress){
 			dLng=results[0].geometry.location.lng();
 
 			displayMap(dLat, dLng, stringAddress, DIVID);
+			buildHTML("res/htmlTemplate.html",dLat, dLng, stringAddress)
 		} else {
 			displayError('Geocode was not successful for the following reason: ' + status);
 		}
@@ -53,11 +54,45 @@ function convertAddress(stringAddress){
 
 }
 
+
+
+function applyTemplate(template, properties) {
+    var returnValue = "";
+
+    var templateFragments = template.split("{{");
+
+    returnValue += templateFragments[0];
+
+    for (var i = 1; i < templateFragments.length; i++) {
+        var fragmentSections = templateFragments[i].split("}}", 2);
+        returnValue += properties[fragmentSections[0]];
+        returnValue += fragmentSections[1];
+    }
+
+    return returnValue;
+}
+
 function buildHTML(templateFile, lat, lng, stringAddress){
 	//this function build button html code using the given template and return as string
+	$.get( templateFile, function( template ) {
 
-	return "<div>some html code</div>";
+		var properties = {
+			dLat: lat,
+			dLng: lng,
+			dStringAddress: '"'+stringAddress+'"'
+		};
+
+		htmlCode = applyTemplate(template, properties);
+
+		document.getElementById("resultHtml").innerHTML = htmlCode;
+		console.log( "Load was performed." );
+
+	});
+
+	//return "<div>some html code</div>";
 }
+
+
 
 function displayMap(lat, lng, divID){
 	displayMap(lat, lng, "", divID);
