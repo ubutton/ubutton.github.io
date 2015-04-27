@@ -23,7 +23,7 @@ function displayError(errorMessage){
 
 function convertAddress(stringAddress){
 	//this function convert stringAddress into lat lng
-	return { "lat":123.45, "lng":56.789};
+	return { "lat":123.45, "lng":56.789 };
 }
 
 function buildHTML(templateFile, lat, lng, stringAddress){
