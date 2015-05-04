@@ -128,14 +128,36 @@ function getInfoFromUber(dStringAddress, dLat, dLng, cLat, cLng){
 	//	get real time info
 	//	call buildButton
 
-	buildButton(cLat, cLng);
+	// Uber API Constants
+	var uberClientId = "VzXgBbV8WTXvPIzKvPFp2mi0Keq46jAQ";
+	var uberServerToken = "r1AgYpOvxjgYgEUSTCP3rPnaCmYPE1NcOOZ0Mw3q";
+
+	$.ajax({
+		url: "https://api.uber.com/v1/estimates/price",
+		headers: {
+			Authorization: "Token " + uberServerToken
+		},
+		data: {
+			start_latitude: cLat,
+			start_longitude: cLng,
+			end_latitude: dLat,
+			end_longitude: dLng
+		},
+		success: function(result) {
+			console.log("result");
+			console.log(result);
+			buildButton(cLat, cLng);
+		}
+	});
+
+
 
 }
 
 function buildButton(realTimeInfoFromUber_1, realTimeInfoFromUber_2){
 	//this fucntion will build html code for button, and inflate the code into the div.
 
-	document.getElementById("debug").innerHTML=
+	document.getElementById("ubutton").innerHTML=
       "Latitude: " + realTimeInfoFromUber_1 + 
       "<br>Longitude: " + realTimeInfoFromUber_2;
 
@@ -153,6 +175,5 @@ function buildMiniButton(reason){
 }
 
 
-generateUbutton(0,0,"null");
-
+getCurrentLocation(37.789932,-122.390185,"Google San Francisco");
 
