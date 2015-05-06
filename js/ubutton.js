@@ -130,10 +130,148 @@ function getInfoFromUber(dStringAddress, dLat, dLng, cLat, cLng){
 
 	// Uber API Constants
 	var uberClientId = "VzXgBbV8WTXvPIzKvPFp2mi0Keq46jAQ";
-	var uberServerToken = "r1AgYpOvxjgYgEUSTCP3rPnaCmYPE1NcOOZ0Mw3q";
+	//var uberServerToken = "r1AgYpOvxjgYgEUSTCP3rPnaCmYPE1NcOOZ0Mw3q";
+
+	//should find a way to handle fail later
+	$.ajax({
+		url: "https://ancient-tor-1781.herokuapp.com/products?latitude="+cLat+"&longitude="+cLng,
+		dataType: 'jsonp',
+		success: function(productsResult) {
+			if (productsResult.products.length==0){
+				buildMiniButton(4);
+			} else {
+				var productId = productsResult.products[0].product_id;
+				var imageURL = productsResult.products[0].image;
+				var displayName = productsResult.products[0].display_name;
+
+				$.ajax({
+					url: "https://ancient-tor-1781.herokuapp.com/time?start_latitude="+cLat+"&start_longitude="+cLng,
+					dataType: 'jsonp',
+					success: function(timeResult) {
+						var estimatedTimeInSec=0;
+						for (var i=0; i <timeResult.times.length; i++){
+							if (timeResult.times[i].product_id==productId){
+								estimatedTimeInSec = timeResult.times[i].estimate;
+								break;
+							}
+						}
+						var estimatedTime = Math.ceil(estimatedTimeInSec/60);
+
+						$.ajax({
+							url: "https://ancient-tor-1781.herokuapp.com/price?start_latitude="+cLat+"&start_longitude="+cLng+"&end_latitude=37.7298549&end_longitude=-122.4225971",
+							dataType: 'jsonp',
+							success: function(priceResult) {
+								var estimatedPriceRange="$0";
+								for (var i=0; i <priceResult.prices.length; i++){
+									if (priceResult.prices[i].product_id==productId){
+										estimatedPriceRange = priceResult.prices[i].estimate;
+										break;
+									}
+								}
+
+								buildButton(dStringAddress, dLat, dLng, cLat, cLng, imageURL, displayName, estimatedTime, estimatedPriceRange);
+
+							}
+						});
+					}
+				});
+			}
+		}
+	});
+
+
+}
+
+
+
+
+function buildButton(dStringAddress, dLat, dLng, cLat, cLng, imageURL, displayName, estimatedTime, estimatedPriceRange){
+	document.getElementById("ubutton").innerHTML= 
+	"dStringAddress: "+dStringAddress+
+	"<br>dLat: "+dLat+
+	"<br>dLng: "+dLng+
+	"<br>cLat: "+cLat+
+	"<br>cLng: "+cLng+
+	"<br>imageURL: "+imageURL+
+	"<br>displayName: "+displayName+
+	"<br>estimatedTime: "+estimatedTime+
+	"<br>estimatedPriceRange: "+estimatedPriceRange;
+}
+
+/*
+function buildButton(realTimeInfoFromUber_1, realTimeInfoFromUber_2){
+	//this fucntion will build html code for button, and inflate the code into the div.
+
+	document.getElementById("ubutton").innerHTML=
+      "Latitude: " + realTimeInfoFromUber_1 + 
+      "<br>Longitude: " + realTimeInfoFromUber_2;
+
+}
+*/
+
+function buildMiniButton(reason){
+	//will build a mini button in case of failure
+	//function failGeneratingUButton(errorCode){
+	// 0: null
+	// 1: Browser does not support Web Storage
+	// 2: fail to get current location
+	// 3: position is null
+	// 4: no uber services in this area
+
+}
+
+
+getCurrentLocation(37.789932,-122.390185,"Google San Francisco");
+
+
+
+
+
+
+
+//was in getInfoFromUber
+	/*
+
+
+
+	$.getJSON( "https://ancient-tor-1781.herokuapp.com/products?latitude="+cLat+"&longitude="+cLng, function( data ) {
+		console.log(data);
+
+	});
+
+	*/
+
+
+
+	//var xhr = new XMLHttpRequest();
+	//xhr.setRequestHeader("Authorization", uberServerToken);
+	//xhr.open('GET', 'https://api.uber.com/v1/products?latitude=37.7759792&longitude=-122.41823');
+	//xhr.send();
+	/*
+
+	var xhr = new XMLHttpRequest();
+	xhr.open('GET', 'https://api.uber.com/v1/products?latitude=37.7759792&longitude=-122.41823', true);
+	xhr.setRequestHeader("Authorization", uberServerToken);
+	xhr.send();
+	*/
+	//console.log(xhr.responseXML);
+
+/*
+	$.ajaxSetup({
+		headers : {
+			Authorization: "Token " + uberServerToken
+		}
+	});
+	$.getJSON("https://api.uber.com/v1/estimates/price?start_latitude=37.6277002&start_longitude=-122.42616039999999&end_latitude=37.789932&end_longitude=-122.390185&callback=", function(result){
+
+			console.log("result");
+			console.log(result);
+			buildButton(cLat, cLng);
+    });
 
 	$.ajax({
 		url: "https://api.uber.com/v1/estimates/price",
+		dataType: 'jsonp',
 		headers: {
 			Authorization: "Token " + uberServerToken
 		},
@@ -150,30 +288,4 @@ function getInfoFromUber(dStringAddress, dLat, dLng, cLat, cLng){
 		}
 	});
 
-
-
-}
-
-function buildButton(realTimeInfoFromUber_1, realTimeInfoFromUber_2){
-	//this fucntion will build html code for button, and inflate the code into the div.
-
-	document.getElementById("ubutton").innerHTML=
-      "Latitude: " + realTimeInfoFromUber_1 + 
-      "<br>Longitude: " + realTimeInfoFromUber_2;
-
-}
-
-
-function buildMiniButton(reason){
-	//will build a mini button in case of failure
-	//function failGeneratingUButton(errorCode){
-	// 0: null
-	// 1: Browser does not support Web Storage
-	// 2: fail to get current location
-	// 3: position is null
-
-}
-
-
-getCurrentLocation(37.789932,-122.390185,"Google San Francisco");
-
+*/
