@@ -188,7 +188,7 @@ function onButtonClicked(dropoff_address, dropoff_latitude, dropoff_longitude, p
 
 	var baseIOS = "uber://?";
 
-	var uberURI = baseIOS + "client_id="+uberClientId+
+	var uberURI = baseURL + "client_id="+uberClientId+
 									"&dropoff_address="+dropoff_address+
 									"&dropoff_latitude="+dropoff_latitude+
 									"&dropoff_longitude="+dropoff_longitude+
