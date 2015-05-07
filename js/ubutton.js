@@ -21,6 +21,12 @@ function generateUbutton(dLat, dLng, dStringAddress){
 	//	will wait until doc is ready
 	//	
 
+	$(function() {
+    	//console.log( "ready!" );
+    	document.getElementById("ubutton").setAttribute( "onClick", "javascript: onButtonClicked(\""+dStringAddress+"\", "+dLat+", "+dLng+", "+0+", "+0+", \""+0+"\");");
+
+	});
+	
 	getCurrentLocation(dLat, dLng, dStringAddress);
 
 }
@@ -168,7 +174,7 @@ function getInfoFromUber(dStringAddress, dLat, dLng, cLat, cLng){
 									}
 								}
 
-								buildButton(dStringAddress, dLat, dLng, cLat, cLng, imageURL, displayName, estimatedTime, estimatedPriceRange);
+								buildButton(dStringAddress, dLat, dLng, cLat, cLng, imageURL, displayName, estimatedTime, estimatedPriceRange, productId);
 
 							}
 						});
@@ -181,33 +187,58 @@ function getInfoFromUber(dStringAddress, dLat, dLng, cLat, cLng){
 
 }
 
-function onButtonClicked(dropoff_address, dropoff_latitude, dropoff_longitude, pickup_latitude, pickup_longitude){
+function onButtonClicked(dropoff_address, dropoff_latitude, dropoff_longitude, pickup_latitude, pickup_longitude, product_id){
 	//dropoff_nickname
 
-	var baseURL = "https://m.uber.com/sign-up?";
+	dropoff_address=encodeURIComponent(dropoff_address.trim());
 
-	var baseIOS = "uber://?";
+	// Simple device detection
+	var isiOS = (navigator.userAgent.match('iPad') || navigator.userAgent.match('iPhone') || navigator.userAgent.match('iPod'));
+	var isAndroid = navigator.userAgent.match('Android');
+	var isWP = navigator.userAgent.match('Windows Phone') || navigator.userAgent.match('IEMobile');
 
-	var uberURI = baseIOS + "client_id="+uberClientId+
+	var siteURL = "https://m.uber.com/sign-up?"+ "client_id="+uberClientId+
 									"&dropoff_address=\""+dropoff_address+"\""+
 									"&dropoff_latitude="+dropoff_latitude+
 									"&dropoff_longitude="+dropoff_longitude+
 									"&pickup_latitude="+pickup_latitude+
 									"&pickup_longitude="+pickup_longitude;
+	var appURI = "uber://?"+"client_id="+"VzXgBbV8WTXvPIzKvPFp2mi0Keq46jAQ"+
+								"&action=setPickup"+
+								"&dropoff[latitude]="+dropoff_latitude+
+								"&dropoff[longitude]="+dropoff_longitude+
+								"&dropoff[nickname]="+dropoff_address+
+								"&pickup=my_location";
+
+	if (product_id!=0){
+
+		siteURL = siteURL+"&product_id="+product_id;
+		appURI = appURI+"&product_id="+product_id;
+	}							
 
 
-	console.log(uberURI);
+
 	// Redirect to Uber
-	window.location.href = uberURI;
+	if (isiOS){
+		setTimeout(function () { window.location = siteURL; }, 25);		//fall back url
+		$('body').append('<iframe style="visibility: hidden;" src="'+ appURI +'" />');
 
-	//alert("javascript: onButtonClicked(\""+dStringAddress+"\", "+dLat+", "+dLng+", "+dLat+", "+cLng+");");
+	} else if ((isAndroid) || (isWP)){
+		setTimeout(function () { window.location = siteURL; }, 25);		//fall back url
+		window.location = appURI;
+
+	} else {	// if (isOtherPlatform)
+		window.location = siteURL;
+	}
+
+
 }
 
 
-function buildButton(dStringAddress, dLat, dLng, cLat, cLng, imageURL, displayName, estimatedTime, estimatedPriceRange){
+function buildButton(dStringAddress, dLat, dLng, cLat, cLng, imageURL, displayName, estimatedTime, estimatedPriceRange, productId){
 	document.getElementById("ubutton-time").innerHTML= "IN " + estimatedTime + " MIN";
 
-	document.getElementById("ubutton").setAttribute( "onClick", "javascript: onButtonClicked(\""+dStringAddress+"\", "+dLat+", "+dLng+", "+dLat+", "+cLng+");");
+	document.getElementById("ubutton").setAttribute( "onClick", "javascript: onButtonClicked(\""+dStringAddress+"\", "+dLat+", "+dLng+", "+cLat+", "+cLng+", \""+productId+"\");");
 	/*
 	"dStringAddress: "+dStringAddress+
 	"<br>dLat: "+dLat+
@@ -244,7 +275,7 @@ function buildMiniButton(reason){
 }
 
 
-getCurrentLocation(37.789932,-122.390185,"Google San Francisco");
+generateUbutton(37.789932,-122.390185,"Google San Francisco");
 
 
 
