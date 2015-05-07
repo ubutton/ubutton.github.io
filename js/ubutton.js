@@ -12,7 +12,21 @@
 
 // Uber API Constants
 var uberClientId = "VzXgBbV8WTXvPIzKvPFp2mi0Keq46jAQ";
-//var uberServerToken = "r1AgYpOvxjgYgEUSTCP3rPnaCmYPE1NcOOZ0Mw3q";
+
+
+function printButtonHTML(){
+	//this function build button html code using the given template and return as string
+
+	var cssFile=document.createElement("link")
+        cssFile.setAttribute("rel", "stylesheet")
+        cssFile.setAttribute("type", "text/css")
+        cssFile.setAttribute("href", "../css/ubutton.css");
+
+	var buttonHTML='<div id="ubutton" onclick=""><p id="ubutton-time" >ESTIMATING TIME</p></div>';
+	document.write(buttonHTML);
+
+	//return "<div>some html code</div>";
+}
 
 
 function generateUbutton(dLat, dLng, dStringAddress){
@@ -25,9 +39,9 @@ function generateUbutton(dLat, dLng, dStringAddress){
     	//console.log( "ready!" );
     	document.getElementById("ubutton").setAttribute( "onClick", "javascript: onButtonClicked(\""+dStringAddress+"\", "+dLat+", "+dLng+", "+0+", "+0+", \""+0+"\");");
 
+		getCurrentLocation(dLat, dLng, dStringAddress);
 	});
 	
-	getCurrentLocation(dLat, dLng, dStringAddress);
 
 }
 
@@ -64,7 +78,7 @@ function getCurrentLocation(dLat, dLng, dStringAddress){
 	} else {	//if it does not support LocalStorage, then fall back to the defult settings.
 		console.log("Browser does not support Web Storage");
 		buildMiniButton(1);
-		return 1;
+		//return 1;
 	}
 
 	//this function modify the shouldAlertBeforeGetsLocation and store the value to localStorage if available
@@ -239,29 +253,9 @@ function buildButton(dStringAddress, dLat, dLng, cLat, cLng, imageURL, displayNa
 	document.getElementById("ubutton-time").innerHTML= "IN " + estimatedTime + " MIN";
 
 	document.getElementById("ubutton").setAttribute( "onClick", "javascript: onButtonClicked(\""+dStringAddress+"\", "+dLat+", "+dLng+", "+cLat+", "+cLng+", \""+productId+"\");");
-	/*
-	"dStringAddress: "+dStringAddress+
-	"<br>dLat: "+dLat+
-	"<br>dLng: "+dLng+
-	"<br>cLat: "+cLat+
-	"<br>cLng: "+cLng+
-	"<br>imageURL: "+imageURL+
-	"<br>displayName: "+displayName+
-	"<br>estimatedTime: "+estimatedTime+
-	"<br>estimatedPriceRange: "+estimatedPriceRange;
-	*/
-}
-
-/*
-function buildButton(realTimeInfoFromUber_1, realTimeInfoFromUber_2){
-	//this fucntion will build html code for button, and inflate the code into the div.
-
-	document.getElementById("ubutton").innerHTML=
-      "Latitude: " + realTimeInfoFromUber_1 + 
-      "<br>Longitude: " + realTimeInfoFromUber_2;
 
 }
-*/
+
 
 function buildMiniButton(reason){
 	//will build a mini button in case of failure
@@ -271,75 +265,23 @@ function buildMiniButton(reason){
 	// 2: fail to get current location
 	// 3: position is null
 	// 4: no uber services in this area
+	var failReason="unknown";
+	switch(reason){
 
+		case 1: failReason="Browser does not support Web Storage"; break;
+		case 2: failReason="ail to get current location"; break;
+		case 3: failReason="position is null"; break;
+		case 4: failReason="no uber services in this area"; break;
+	}
+
+	document.getElementById("ubutton-time").innerHTML= "Error:" + failReason;
 }
 
 
-generateUbutton(37.789932,-122.390185,"Google San Francisco");
+//generateUbutton(37.789932,-122.390185,"Google San Francisco");
 
 
 
 
+printButtonHTML();
 
-
-
-//was in getInfoFromUber
-	/*
-
-
-
-	$.getJSON( "https://ancient-tor-1781.herokuapp.com/products?latitude="+cLat+"&longitude="+cLng, function( data ) {
-		console.log(data);
-
-	});
-
-	*/
-
-
-
-	//var xhr = new XMLHttpRequest();
-	//xhr.setRequestHeader("Authorization", uberServerToken);
-	//xhr.open('GET', 'https://api.uber.com/v1/products?latitude=37.7759792&longitude=-122.41823');
-	//xhr.send();
-	/*
-
-	var xhr = new XMLHttpRequest();
-	xhr.open('GET', 'https://api.uber.com/v1/products?latitude=37.7759792&longitude=-122.41823', true);
-	xhr.setRequestHeader("Authorization", uberServerToken);
-	xhr.send();
-	*/
-	//console.log(xhr.responseXML);
-
-/*
-	$.ajaxSetup({
-		headers : {
-			Authorization: "Token " + uberServerToken
-		}
-	});
-	$.getJSON("https://api.uber.com/v1/estimates/price?start_latitude=37.6277002&start_longitude=-122.42616039999999&end_latitude=37.789932&end_longitude=-122.390185&callback=", function(result){
-
-			console.log("result");
-			console.log(result);
-			buildButton(cLat, cLng);
-    });
-
-	$.ajax({
-		url: "https://api.uber.com/v1/estimates/price",
-		dataType: 'jsonp',
-		headers: {
-			Authorization: "Token " + uberServerToken
-		},
-		data: {
-			start_latitude: cLat,
-			start_longitude: cLng,
-			end_latitude: dLat,
-			end_longitude: dLng
-		},
-		success: function(result) {
-			console.log("result");
-			console.log(result);
-			buildButton(cLat, cLng);
-		}
-	});
-
-*/
