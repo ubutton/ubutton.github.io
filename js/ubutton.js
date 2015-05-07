@@ -10,7 +10,10 @@
 // 7 = full
 // 1-6 should implement in stage 2
 
-var currentLocation={};
+// Uber API Constants
+var uberClientId = "VzXgBbV8WTXvPIzKvPFp2mi0Keq46jAQ";
+//var uberServerToken = "r1AgYpOvxjgYgEUSTCP3rPnaCmYPE1NcOOZ0Mw3q";
+
 
 function generateUbutton(dLat, dLng, dStringAddress){
 	//this function is called when the client(resturant/ website that use this button)'s html code is run.
@@ -128,10 +131,6 @@ function getInfoFromUber(dStringAddress, dLat, dLng, cLat, cLng){
 	//	get real time info
 	//	call buildButton
 
-	// Uber API Constants
-	var uberClientId = "VzXgBbV8WTXvPIzKvPFp2mi0Keq46jAQ";
-	//var uberServerToken = "r1AgYpOvxjgYgEUSTCP3rPnaCmYPE1NcOOZ0Mw3q";
-
 	//should find a way to handle fail later
 	$.ajax({
 		url: "https://ancient-tor-1781.herokuapp.com/products?latitude="+cLat+"&longitude="+cLng,
@@ -182,11 +181,28 @@ function getInfoFromUber(dStringAddress, dLat, dLng, cLat, cLng){
 
 }
 
+function onButtonClicked(dropoff_address, dropoff_latitude, dropoff_longitude, pickup_latitude, pickup_longitude){
+	//dropoff_nickname
+	uberURL="https://m.uber.com/sign-up?client_id="+uberClientId+
+									"&dropoff_address="+dropoff_address+
+									"&dropoff_latitude="+dropoff_latitude+
+									"&dropoff_longitude="+dropoff_longitude+
+									"&pickup_latitude="+pickup_latitude+
+									"&pickup_longitude="+pickup_longitude;
 
+
+	// Redirect to Uber
+	window.location.href = uberURL;
+
+	//alert("javascript: onButtonClicked(\""+dStringAddress+"\", "+dLat+", "+dLng+", "+dLat+", "+cLng+");");
+}
 
 
 function buildButton(dStringAddress, dLat, dLng, cLat, cLng, imageURL, displayName, estimatedTime, estimatedPriceRange){
-	document.getElementById("ubutton").innerHTML= 
+	document.getElementById("ubutton-time").innerHTML= "IN " + estimatedTime + " MIN";
+
+	document.getElementById("ubutton").setAttribute( "onClick", "javascript: onButtonClicked(\""+dStringAddress+"\", "+dLat+", "+dLng+", "+dLat+", "+cLng+");");
+	/*
 	"dStringAddress: "+dStringAddress+
 	"<br>dLat: "+dLat+
 	"<br>dLng: "+dLng+
@@ -196,6 +212,7 @@ function buildButton(dStringAddress, dLat, dLng, cLat, cLng, imageURL, displayNa
 	"<br>displayName: "+displayName+
 	"<br>estimatedTime: "+estimatedTime+
 	"<br>estimatedPriceRange: "+estimatedPriceRange;
+	*/
 }
 
 /*
