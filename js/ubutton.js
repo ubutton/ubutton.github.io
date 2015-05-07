@@ -188,7 +188,7 @@ function onButtonClicked(dropoff_address, dropoff_latitude, dropoff_longitude, p
 
 	var baseIOS = "uber://?";
 
-	var uberURI = baseURL + "client_id="+uberClientId+
+	var uberURI = baseIOS + "client_id="+uberClientId+
 									"&dropoff_address="+dropoff_address+
 									"&dropoff_latitude="+dropoff_latitude+
 									"&dropoff_longitude="+dropoff_longitude+
@@ -196,6 +196,7 @@ function onButtonClicked(dropoff_address, dropoff_latitude, dropoff_longitude, p
 									"&pickup_longitude="+pickup_longitude;
 
 
+	console.log(uberURI);
 	// Redirect to Uber
 	window.location.href = uberURI;
 
