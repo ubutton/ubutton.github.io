@@ -15,17 +15,10 @@ var uberClientId = "VzXgBbV8WTXvPIzKvPFp2mi0Keq46jAQ";
 
 
 function printButtonHTML(){
-	//this function build button html code using the given template and return as string
-
-	var cssFile=document.createElement("link")
-        cssFile.setAttribute("rel", "stylesheet")
-        cssFile.setAttribute("type", "text/css")
-        cssFile.setAttribute("href", "../css/ubutton.css");
 
 	var buttonHTML='<div id="ubutton" onclick=""><p id="ubutton-time" >ESTIMATING TIME</p></div>';
 	document.write(buttonHTML);
 
-	//return "<div>some html code</div>";
 }
 
 
@@ -181,14 +174,16 @@ function getInfoFromUber(dStringAddress, dLat, dLng, cLat, cLng){
 							dataType: 'jsonp',
 							success: function(priceResult) {
 								var estimatedPriceRange="$0";
+								var shouldDisplayPrice=false;
 								for (var i=0; i <priceResult.prices.length; i++){
 									if (priceResult.prices[i].product_id==productId){
 										estimatedPriceRange = priceResult.prices[i].estimate;
+										shouldDisplayPrice = (priceResult.prices[i].surge_multiplier==1);
 										break;
 									}
 								}
 
-								buildButton(dStringAddress, dLat, dLng, cLat, cLng, imageURL, displayName, estimatedTime, estimatedPriceRange, productId);
+								buildButton(dStringAddress, dLat, dLng, cLat, cLng, imageURL, displayName, estimatedTime, estimatedPriceRange, productId, shouldDisplayPrice);
 
 							}
 						});
@@ -249,8 +244,12 @@ function onButtonClicked(dropoff_address, dropoff_latitude, dropoff_longitude, p
 }
 
 
-function buildButton(dStringAddress, dLat, dLng, cLat, cLng, imageURL, displayName, estimatedTime, estimatedPriceRange, productId){
-	document.getElementById("ubutton-time").innerHTML= "IN " + estimatedTime + " MIN";
+function buildButton(dStringAddress, dLat, dLng, cLat, cLng, imageURL, displayName, estimatedTime, estimatedPriceRange, productId, shouldDisplayPrice){
+	document.getElementById("ubutton-time").innerHTML = "IN " + estimatedTime + " MIN";
+
+	if (shouldDisplayPrice){
+		document.getElementById("ubutton-time").innerHTML += " | " + estimatedPriceRange;
+	}
 
 	document.getElementById("ubutton").setAttribute( "onClick", "javascript: onButtonClicked(\""+dStringAddress+"\", "+dLat+", "+dLng+", "+cLat+", "+cLng+", \""+productId+"\");");
 
