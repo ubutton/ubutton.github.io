@@ -7,11 +7,11 @@
 		<script>
 			// ref: http://www.w3schools.com/JQuery/jquery_hide_show.asp
 			$(document).ready(function(){
-			    $("#hide").click(function(){
-			        $("p").hide();
+			    $("#showmap").click(function(){
+			        $("textarea").hide();
 			    });
-			    $("#show").click(function(){
-			        $("p").show();
+			    $("#showmap").click(function(){
+			        $("textarea").show();
 			    });
 			});
 		</script>
@@ -21,6 +21,9 @@
 	<p>If you click on the "Hide" button, I will disappear.
 
 	</p>
+	<script src="js/index.js"></script>
+	<script> displayTitle() </script>
+	
 
 	<button id="hide">Hide</button>
 	<button id="show">Show</button>
@@ -29,8 +32,7 @@
 
 
     <p>Hello World! its ubutton</p>
-    <h1>This is kaya's edit</h1>
-    <h1>This is Kyle's edit</h1>
+    
 
 
     <div id="result">
