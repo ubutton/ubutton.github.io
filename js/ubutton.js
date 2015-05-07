@@ -183,7 +183,12 @@ function getInfoFromUber(dStringAddress, dLat, dLng, cLat, cLng){
 
 function onButtonClicked(dropoff_address, dropoff_latitude, dropoff_longitude, pickup_latitude, pickup_longitude){
 	//dropoff_nickname
-	uberURL="https://m.uber.com/sign-up?client_id="+uberClientId+
+
+	var baseURL = "https://m.uber.com/sign-up?";
+
+	var baseIOS = "uber://?";
+
+	var uberURI = baseIOS + "client_id="+uberClientId+
 									"&dropoff_address="+dropoff_address+
 									"&dropoff_latitude="+dropoff_latitude+
 									"&dropoff_longitude="+dropoff_longitude+
@@ -192,7 +197,7 @@ function onButtonClicked(dropoff_address, dropoff_latitude, dropoff_longitude, p
 
 
 	// Redirect to Uber
-	window.location.href = uberURL;
+	window.location.href = uberURI;
 
 	//alert("javascript: onButtonClicked(\""+dStringAddress+"\", "+dLat+", "+dLng+", "+dLat+", "+cLng+");");
 }
