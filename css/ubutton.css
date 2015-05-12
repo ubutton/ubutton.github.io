@@ -1,0 +1,15 @@
+#ubutton{
+	background-image: url("https://ubutton.github.io/res/Assets/Uber\ API\ Buttons/Grey/PNGs/2x/UBER_API_Button_2x_Grey_hard\ edge.png");
+	background-size: cover;
+	width: 280px;
+	height: 44px;
+	margin: 0 auto;
+}
+
+#ubutton-time{
+	text-align: right;
+	margin-top: 2%;
+	padding-top: 12px;
+	padding-right: 14px;
+	font-family: "Clan Pro", clan-pro, sans-serif;
+}

@@ -10,7 +10,17 @@
 // 7 = full
 // 1-6 should implement in stage 2
 
-var currentLocation={};
+// Uber API Constants
+var uberClientId = "VzXgBbV8WTXvPIzKvPFp2mi0Keq46jAQ";
+
+
+function printButtonHTML(){
+
+	var buttonHTML='<div id="ubutton" onclick=""><p id="ubutton-time" >ESTIMATING TIME</p></div>';
+	document.write(buttonHTML);
+
+}
+
 
 function generateUbutton(dLat, dLng, dStringAddress){
 	//this function is called when the client(resturant/ website that use this button)'s html code is run.
@@ -18,7 +28,13 @@ function generateUbutton(dLat, dLng, dStringAddress){
 	//	will wait until doc is ready
 	//	
 
-	getCurrentLocation(dLat, dLng, dStringAddress);
+	$(function() {
+    	//console.log( "ready!" );
+    	document.getElementById("ubutton").setAttribute( "onClick", "javascript: onButtonClicked(\""+dStringAddress+"\", "+dLat+", "+dLng+", "+0+", "+0+", \""+0+"\");");
+
+		getCurrentLocation(dLat, dLng, dStringAddress);
+	});
+	
 
 }
 
@@ -55,7 +71,7 @@ function getCurrentLocation(dLat, dLng, dStringAddress){
 	} else {	//if it does not support LocalStorage, then fall back to the defult settings.
 		console.log("Browser does not support Web Storage");
 		buildMiniButton(1);
-		return 1;
+		//return 1;
 	}
 
 	//this function modify the shouldAlertBeforeGetsLocation and store the value to localStorage if available
@@ -128,16 +144,114 @@ function getInfoFromUber(dStringAddress, dLat, dLng, cLat, cLng){
 	//	get real time info
 	//	call buildButton
 
-	buildButton(cLat, cLng);
+	//should find a way to handle fail later
+	$.ajax({
+		url: "https://ancient-tor-1781.herokuapp.com/products?latitude="+cLat+"&longitude="+cLng,
+		dataType: 'jsonp',
+		success: function(productsResult) {
+			if (productsResult.products.length==0){
+				buildMiniButton(4);
+			} else {
+				var productId = productsResult.products[0].product_id;
+				var imageURL = productsResult.products[0].image;
+				var displayName = productsResult.products[0].display_name;
+
+				$.ajax({
+					url: "https://ancient-tor-1781.herokuapp.com/time?start_latitude="+cLat+"&start_longitude="+cLng,
+					dataType: 'jsonp',
+					success: function(timeResult) {
+						var estimatedTimeInSec=0;
+						for (var i=0; i <timeResult.times.length; i++){
+							if (timeResult.times[i].product_id==productId){
+								estimatedTimeInSec = timeResult.times[i].estimate;
+								break;
+							}
+						}
+						var estimatedTime = Math.ceil(estimatedTimeInSec/60);
+
+						$.ajax({
+							url: "https://ancient-tor-1781.herokuapp.com/price?start_latitude="+cLat+"&start_longitude="+cLng+"&end_latitude=37.7298549&end_longitude=-122.4225971",
+							dataType: 'jsonp',
+							success: function(priceResult) {
+								var estimatedPriceRange="$0";
+								var shouldDisplayPrice=false;
+								for (var i=0; i <priceResult.prices.length; i++){
+									if (priceResult.prices[i].product_id==productId){
+										estimatedPriceRange = priceResult.prices[i].estimate;
+										shouldDisplayPrice = (priceResult.prices[i].surge_multiplier==1);
+										break;
+									}
+								}
+
+								buildButton(dStringAddress, dLat, dLng, cLat, cLng, imageURL, displayName, estimatedTime, estimatedPriceRange, productId, shouldDisplayPrice);
+
+							}
+						});
+					}
+				});
+			}
+		}
+	});
+
 
 }
 
-function buildButton(realTimeInfoFromUber_1, realTimeInfoFromUber_2){
-	//this fucntion will build html code for button, and inflate the code into the div.
+function onButtonClicked(dropoff_address, dropoff_latitude, dropoff_longitude, pickup_latitude, pickup_longitude, product_id){
+	//dropoff_nickname
 
-	document.getElementById("debug").innerHTML=
-      "Latitude: " + realTimeInfoFromUber_1 + 
-      "<br>Longitude: " + realTimeInfoFromUber_2;
+	dropoff_address=encodeURIComponent(dropoff_address.trim());
+
+	// Simple device detection
+	var isiOS = (navigator.userAgent.match('iPad') || navigator.userAgent.match('iPhone') || navigator.userAgent.match('iPod'));
+	var isAndroid = navigator.userAgent.match('Android');
+	var isWP = navigator.userAgent.match('Windows Phone') || navigator.userAgent.match('IEMobile');
+
+	var siteURL = "https://m.uber.com/sign-up?"+ "client_id="+uberClientId+
+									"&dropoff_address=\""+dropoff_address+"\""+
+									"&dropoff_latitude="+dropoff_latitude+
+									"&dropoff_longitude="+dropoff_longitude+
+									"&pickup_latitude="+pickup_latitude+
+									"&pickup_longitude="+pickup_longitude;
+	var appURI = "uber://?"+"client_id="+"VzXgBbV8WTXvPIzKvPFp2mi0Keq46jAQ"+
+								"&action=setPickup"+
+								"&dropoff[latitude]="+dropoff_latitude+
+								"&dropoff[longitude]="+dropoff_longitude+
+								"&dropoff[nickname]="+dropoff_address+
+								"&pickup=my_location";
+
+	if (product_id!=0){
+
+		siteURL = siteURL+"&product_id="+product_id;
+		appURI = appURI+"&product_id="+product_id;
+	}							
+
+
+
+	// Redirect to Uber
+	if (isiOS){
+		setTimeout(function () { window.location = siteURL; }, 25);		//fall back url
+		$('body').append('<iframe style="visibility: hidden;" src="'+ appURI +'" />');
+
+	} else if ((isAndroid) || (isWP)){
+		setTimeout(function () { window.location = siteURL; }, 25);		//fall back url
+		window.location = appURI;
+
+	} else {	// if (isOtherPlatform)
+		window.location = siteURL;
+	}
+
+
+}
+
+
+function buildButton(dStringAddress, dLat, dLng, cLat, cLng, imageURL, displayName, estimatedTime, estimatedPriceRange, productId, shouldDisplayPrice){
+	document.getElementById("ubutton-time").innerHTML = "IN " + estimatedTime + " MIN";
+
+	if (shouldDisplayPrice){
+		document.getElementById("ubutton-time").innerHTML += " | " + estimatedPriceRange;
+	}
+
+	document.getElementById("ubutton").setAttribute( "onClick", "javascript: onButtonClicked(\""+dStringAddress+"\", "+dLat+", "+dLng+", "+cLat+", "+cLng+", \""+productId+"\");");
 
 }
 
@@ -149,10 +263,24 @@ function buildMiniButton(reason){
 	// 1: Browser does not support Web Storage
 	// 2: fail to get current location
 	// 3: position is null
+	// 4: no uber services in this area
+	var failReason="unknown";
+	switch(reason){
 
+		case 1: failReason="Browser does not support Web Storage"; break;
+		case 2: failReason="ail to get current location"; break;
+		case 3: failReason="position is null"; break;
+		case 4: failReason="no uber services in this area"; break;
+	}
+
+	document.getElementById("ubutton-time").innerHTML= "Error:" + failReason;
 }
 
 
-generateUbutton(0,0,"null");
+//generateUbutton(37.789932,-122.390185,"Google San Francisco");
 
+
+
+
+printButtonHTML();
 

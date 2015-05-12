@@ -8,10 +8,13 @@ html{
 }
 body
 {
-	background:#696969;
+	background:url(http://tctechcrunch2011.files.wordpress.com/2013/10/uber_seo_car.jpg?w=1344&h=896);
+	background-size:cover;
+    background-position:center;
 	text-align: center;
     color:white;
     font-family:helvetica;
+
 
 }
 
