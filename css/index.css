@@ -3,7 +3,6 @@ html{
 	margin: 0px;
 	padding: 0px
 	
-
     
 }
 body
@@ -17,7 +16,14 @@ body
 
 
 }
+h1.greet
+{
+	background-color: black;
+	color:white;
+	font-family:Geogia;  	
+	font-size:36px;
 
+}
 #map-canvas {
 	height: 30%;
 	margin: 0px;
