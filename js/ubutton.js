@@ -16,7 +16,7 @@ var uberClientId = "VzXgBbV8WTXvPIzKvPFp2mi0Keq46jAQ";
 
 function printButtonHTML(){
 
-	var buttonHTML='<div id="ubutton" onclick=""><p id="ubutton-time" >ESTIMATING TIME</p></div>';
+	var buttonHTML='<div id="ubutton" onclick=""><div id="ubutton-time" >ESTIMATING TIME</div></div>';
 	document.write(buttonHTML);
 
 }
@@ -245,10 +245,15 @@ function onButtonClicked(dropoff_address, dropoff_latitude, dropoff_longitude, p
 
 
 function buildButton(dStringAddress, dLat, dLng, cLat, cLng, imageURL, displayName, estimatedTime, estimatedPriceRange, productId, shouldDisplayPrice){
-	document.getElementById("ubutton-time").innerHTML = "IN " + estimatedTime + " MIN";
+
 
 	if (shouldDisplayPrice){
-		document.getElementById("ubutton-time").innerHTML += " | " + estimatedPriceRange;
+		document.getElementById("ubutton").innerHTML = '<div id="ubutton" onclick=""><div id="ubutton-time" >IN ' + estimatedTime + ' MIN</div><div id="ubutton-price" >' + estimatedPriceRange + '</div></div>';
+
+		var priceLength = document.getElementById("ubutton-price").clientWidth; 
+		document.getElementById("ubutton-time").style.width = 280 - priceLength - 14 - 1*4;
+	} else {
+		document.getElementById("ubutton-time").innerHTML = "RIDE IN " + estimatedTime + " MIN";
 	}
 
 	document.getElementById("ubutton").setAttribute( "onClick", "javascript: onButtonClicked(\""+dStringAddress+"\", "+dLat+", "+dLng+", "+cLat+", "+cLng+", \""+productId+"\");");

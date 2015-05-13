@@ -7,9 +7,31 @@
 }
 
 #ubutton-time{
+	float: left;
+	display: inline-block;
 	text-align: right;
-	margin-top: 2%;
+	width: 264px;
 	padding-top: 12px;
+	padding-bottom: 12px;
 	padding-right: 14px;
-	font-family: "Clan Pro", clan-pro, sans-serif;
+	color: #09091A;
+	font-family: HelveticaNeue, Helvetica, sans-serif;
+	border: #DFDFE3 solid 1px ;
 }
+
+
+
+
+#ubutton-price{
+	float: right;
+	display: inline-block;
+	text-align: right;
+	padding-top: 12px;
+	padding-bottom: 12px;
+	padding-right: 14px;
+	padding-left: 14px;
+	color: #09091A;
+	font-family: HelveticaNeue, Helvetica, sans-serif;
+	border: #DFDFE3 solid 1px ;
+}
+
