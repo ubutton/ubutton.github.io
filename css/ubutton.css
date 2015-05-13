@@ -7,7 +7,6 @@
 }
 
 #ubutton-time{
-<<<<<<< HEAD
 	float: left;
 	display: inline-block;
 	text-align: right;
@@ -35,12 +34,3 @@
 	font-family: HelveticaNeue, Helvetica, sans-serif;
 	border: #DFDFE3 solid 1px ;
 }
-
-=======
-	text-align: right;
-	margin-top: 2%;
-	padding-top: 12px;
-	padding-right: 14px;
-	font-family: "Clan Pro", clan-pro, sans-serif;
-}
->>>>>>> origin/master
