@@ -1,11 +1,49 @@
-html, body {
+html{
 	height: 100%;
 	margin: 0px;
 	padding: 0px
+	
+    
 }
+body
+{
+	background:url(http://tctechcrunch2011.files.wordpress.com/2013/10/uber_seo_car.jpg?w=1344&h=896);
+	background-size:cover;
+    background-position:center;
+	text-align: center;
+    color:white;
+    font-family:helvetica;
 
+
+}
+h1.greet
+{
+	background-color: black;
+	color:white;
+	font-family:Geogia;  	
+	font-size:36px;
+
+}
 #map-canvas {
 	height: 30%;
 	margin: 0px;
 	padding: 0px
 }
+input[id="inputAddress"] {
+    border:0;
+    padding:10px;
+    font-size:20px;
+
+      }
+input[id="placeholder"]{
+	border-color: black;
+}
+button[id="showmap"] 
+{	
+    background: gray;
+    color: white;
+    padding:10px;
+}
+
+
+

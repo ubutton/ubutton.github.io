@@ -7,35 +7,35 @@
 		<script>
 			// ref: http://www.w3schools.com/JQuery/jquery_hide_show.asp
 			$(document).ready(function(){
-			    $("#hide").click(function(){
-			        $("p").hide();
+			    $("#showmap").click(function(){
+			        $("textarea").hide();
 			    });
-			    $("#show").click(function(){
-			        $("p").show();
+			    $("#showmap").click(function(){
+			        $("textarea").show();
 			    });
 			});
 		</script>
 	</head>
 <body>
+<img src="https://pbs.twimg.com/profile_images/378800000762572812/91ea09a6535666e18ca3c56f731f67ef.jpeg">
+	<h1 id = "greet">Welcome! Uber Button Generator</h1> 
+	<h2>Want customer to use Uber to go to your shop? </h2>
+	<h2>We are here to help!!</h2>
 
-	<p>If you click on the "Hide" button, I will disappear.
-
-	</p>
-
-	<button id="hide">Hide</button>
-	<button id="show">Show</button>
+	<p>Type your shop address</p>
+	<script src="js/index.js"></script>
+	<script> displayTitle() </script>
 	<input id="inputAddress" placeholder="address here"></input>
 	<button id="showmap" onclick="buttonClicked()">Show Map</button>
 
 
-    <p>Hello World! its ubutton</p>
-    <h1>This is kaya's edit</h1>
-    <h1>This is Kyle's edit</h1>
+   
 
 
     <div id="result">
     	<textarea rows="10" cols="100" id="resultHtml"></textarea>
 		<div id="map-canvas"></div>
 	</div>
-  </body>
+
+ </body>
 </html>

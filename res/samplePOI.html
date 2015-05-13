@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+</head>
+<body>
+
+<div data-role="page" id="pageone">
+  <div data-role="header">
+    <h1>Restaurant de Dream?</h1>
+  </div>
+
+  <div data-role="main" class="ui-content">
+    <p>Welcome! I am just going to put some random food photos :)</p>
+      
+      <p>
+      <img src="http://www.euroclubschools.net/userimages/Escargot.jpg"/>
+      </p>
+    <a href="#pagetwo">Come visit us</a>
+  </div>
+
+  <div data-role="footer">
+    <h1>Footer Text</h1>
+  </div>
+</div> 
+
+<div data-role="page" id="pagetwo">
+  <div data-role="header">
+    <h1>Welcome To My Homepage</h1>
+  </div>
+
+  <div data-role="main" class="ui-content">
+    <p>This is our address: 123 dsa sddss sdas, SF, CA</p>
+          
+      
+      <iframe
+  width="600"
+  height="450"
+  frameborder="0" style="border:0"
+  src="https://www.google.com/maps/embed/v1/view?key=AIzaSyD3xUkslr-u7pQEeA7mxFxvoQoOM_WA288
+  &center=37.789932,-122.390185
+  &zoom=18">
+</iframe>
+      
+      
+    <!-- here is our code! -->
+    <link rel="stylesheet" type="text/css" href="https://ubutton.github.io/css/ubutton.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://ubutton.github.io/js/ubutton.js"></script>
+    <script>generateUbutton(37.789932,-122.390185,"Google San Francisco");</script>
+        
+        
+        
+    <a href="#pageone">Go to Page One</a>
+  </div>
+
+  <div data-role="footer">
+    <h1>Footer Text</h1>
+  </div>
+</div> 
+
+</body>
+</html>

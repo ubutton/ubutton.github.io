@@ -16,7 +16,11 @@ var uberClientId = "VzXgBbV8WTXvPIzKvPFp2mi0Keq46jAQ";
 
 function printButtonHTML(){
 
+<<<<<<< HEAD
 	var buttonHTML='<div id="ubutton" onclick=""><div id="ubutton-time" >ESTIMATING TIME</div></div>';
+=======
+	var buttonHTML='<div id="ubutton" onclick=""><p id="ubutton-time" >ESTIMATING TIME</p></div>';
+>>>>>>> origin/master
 	document.write(buttonHTML);
 
 }
@@ -193,6 +197,7 @@ function getInfoFromUber(dStringAddress, dLat, dLng, cLat, cLng){
 		}
 	});
 
+<<<<<<< HEAD
 
 }
 
@@ -254,6 +259,64 @@ function buildButton(dStringAddress, dLat, dLng, cLat, cLng, imageURL, displayNa
 		document.getElementById("ubutton-time").style.width = 280 - priceLength - 14 - 1*4;
 	} else {
 		document.getElementById("ubutton-time").innerHTML = "RIDE IN " + estimatedTime + " MIN";
+=======
+
+}
+
+function onButtonClicked(dropoff_address, dropoff_latitude, dropoff_longitude, pickup_latitude, pickup_longitude, product_id){
+	//dropoff_nickname
+
+	dropoff_address=encodeURIComponent(dropoff_address.trim());
+
+	// Simple device detection
+	var isiOS = (navigator.userAgent.match('iPad') || navigator.userAgent.match('iPhone') || navigator.userAgent.match('iPod'));
+	var isAndroid = navigator.userAgent.match('Android');
+	var isWP = navigator.userAgent.match('Windows Phone') || navigator.userAgent.match('IEMobile');
+
+	var siteURL = "https://m.uber.com/sign-up?"+ "client_id="+uberClientId+
+									"&dropoff_address=\""+dropoff_address+"\""+
+									"&dropoff_latitude="+dropoff_latitude+
+									"&dropoff_longitude="+dropoff_longitude+
+									"&pickup_latitude="+pickup_latitude+
+									"&pickup_longitude="+pickup_longitude;
+	var appURI = "uber://?"+"client_id="+"VzXgBbV8WTXvPIzKvPFp2mi0Keq46jAQ"+
+								"&action=setPickup"+
+								"&dropoff[latitude]="+dropoff_latitude+
+								"&dropoff[longitude]="+dropoff_longitude+
+								"&dropoff[nickname]="+dropoff_address+
+								"&pickup=my_location";
+
+	if (product_id!=0){
+
+		siteURL = siteURL+"&product_id="+product_id;
+		appURI = appURI+"&product_id="+product_id;
+	}							
+
+
+
+	// Redirect to Uber
+	if (isiOS){
+		setTimeout(function () { window.location = siteURL; }, 25);		//fall back url
+		$('body').append('<iframe style="visibility: hidden;" src="'+ appURI +'" />');
+
+	} else if ((isAndroid) || (isWP)){
+		setTimeout(function () { window.location = siteURL; }, 25);		//fall back url
+		window.location = appURI;
+
+	} else {	// if (isOtherPlatform)
+		window.location = siteURL;
+	}
+
+
+}
+
+
+function buildButton(dStringAddress, dLat, dLng, cLat, cLng, imageURL, displayName, estimatedTime, estimatedPriceRange, productId, shouldDisplayPrice){
+	document.getElementById("ubutton-time").innerHTML = "IN " + estimatedTime + " MIN";
+
+	if (shouldDisplayPrice){
+		document.getElementById("ubutton-time").innerHTML += " | " + estimatedPriceRange;
+>>>>>>> origin/master
 	}
 
 	document.getElementById("ubutton").setAttribute( "onClick", "javascript: onButtonClicked(\""+dStringAddress+"\", "+dLat+", "+dLng+", "+cLat+", "+cLng+", \""+productId+"\");");
