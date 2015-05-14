@@ -8,8 +8,12 @@
 		<script src="js/index.js"></script>
 		<link rel="stylesheet" type="text/css" href="css/jquery.fullPage.css" />
 		<script type="text/javascript" src="js/jquery.fullPage.js"></script>
+
+		<script type="text/javascript" src="js/ZeroClipboard/ZeroClipboard.js"></script>
+
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+		<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 		<script>
-			// ref: http://www.w3schools.com/JQuery/jquery_hide_show.asp
 			$(document).ready(function(){
 
 			    //for fullPage
@@ -29,11 +33,28 @@
 				(document.getElementById('inputAddress')), {
 					types: ['geocode']
 				});
+
+
+				var clip = new ZeroClipboard($("#ZeroClipboard"), {
+					moviePath: "js/ZeroClipboard/ZeroClipboard.swf"
+				});   
+
+				clip.on( "ready", function( readyEvent ) {
+					clip.on( "aftercopy", function( event ) {
+						displayError("Copied code to clipboard");//: " + event.data["text/plain"] );
+					} );
+				} );
+
 			});
 		</script>
 	</head>
 <body>
 
+<div id="dialog" title="Basic dialog" style="display: none; width:60%; height:60%">
+		<div id="map-canvas"></div>
+		<textarea rows="6" id="resultHtml" style="width:100%;" onclick="$(this).select();">This will be code to paste on your website.</textarea>
+		<button id="ZeroClipboard" title="Copy To Clipboard" data-clipboard-target="resultHtml">Copy To Clipboard</button>
+</div>
 
 
 <div id="fullpage">
@@ -47,8 +68,11 @@
 		<script> displayTitle(); </script>
 		<input id="inputAddress" placeholder="address here"></input>
 		<button id="showmap" onclick="buttonClicked()">Generate</button>
+		<!--<button id="dialogButton" onclick="$(function() { $( '#dialog' ).dialog(); });">Dialog</button>-->
 
     </div>
+
+    <!--
     <div id="resultDiv" class="section" >
 	    <div id="result-text">
 
@@ -57,8 +81,8 @@
 	    </div>
 		<div id="map-canvas"></div>
     </div>
+	-->
     <div class="section" style="background-color: #b0c4de;">
-
     		<h2 align="left">About Us</h2>
     	<!--<h2 style="position:absolute; top:0px; left:5%;">About Us</h2>-->
 

@@ -29,7 +29,8 @@ function buttonClicked(){
 function displayError(errorMessage){
 	//display error messages
 	//should not use alert :)
-	alert(errorMessage);
+	//alert(errorMessage);
+	toast(errorMessage);
 }
 
 
@@ -46,7 +47,11 @@ function convertAddress(stringAddress){
 			dLng=results[0].geometry.location.lng();
 
 			displayMap(dLat, dLng, stringAddress, DIVID);
-			buildHTML("res/htmlTemplate.html",dLat, dLng, stringAddress)
+			buildHTML("res/htmlTemplate.html",dLat, dLng, stringAddress);
+
+
+			showResult();
+
 		} else {
 			displayError('Geocode was not successful for the following reason: ' + status);
 		}
@@ -87,8 +92,8 @@ function buildHTML(templateFile, lat, lng, stringAddress){
 		document.getElementById("resultHtml").innerHTML = htmlCode;
 		//console.log( "Load was performed." );
 
-		//to scroll if we generated something
-		$.fn.fullpage.moveSectionDown();
+
+		
 
 		//document.getElementById("resultHtml").focus();
 	});
@@ -130,20 +135,40 @@ function displayMap(lat, lng, stringAddress, divID){
 			center: myLatlng
 		}
 
-		var map = new google.maps.Map(document.getElementById(divID), mapOptions);
+		map = new google.maps.Map(document.getElementById(divID), mapOptions);
 
-		var marker = new google.maps.Marker({
+		marker = new google.maps.Marker({
 			position: myLatlng,
 			map: map,
 			title: stringAddress
 		});
 
-		map.setOptions({styles: stylesArray});
+		//map.setOptions({styles: stylesArray});
 	}
 	google.maps.event.addDomListener(window, 'load', initialize(lat, lng, stringAddress, divID));
 
 	
 }
+
+
+//this function is to open a dialog
+function showResult(){
+
+
+		//to scroll if we generated something
+		//$.fn.fullpage.moveSectionDown();
+		$( "#dialog" ).dialog({
+			title: "Result",
+			minHeight: $(window).height()*0.8,
+			minWidth: $(window).width()*0.8
+		});
+		document.getElementById("map-canvas").style.height = $(window).height()*0.8*0.5+'px';
+		 //$('#map-canvas').style.height= '200px'//$(window).height()*0.8*0.4+'px';
+
+		google.maps.event.trigger(map, 'resize');
+		map.setCenter(marker.position);
+}
+
 
 
 //To looks nicer 
@@ -163,3 +188,27 @@ function displayTitle()
 	//drawName(myName, letterColors,bounceBubbles());
 }
 
+
+
+
+//http://shawntabai.com/wp/2011/09/06/toast-notifications-using-jquery/
+	function toast(sMessage)
+	{
+		var container = $(document.createElement("div"));
+		container.addClass("toast");
+
+		var message = $(document.createElement("div"));
+		message.addClass("message");
+		message.text(sMessage);
+		message.appendTo(container);
+
+		container.appendTo(document.body);
+
+		container.delay(100).fadeIn("slow", function()
+		{
+			$(this).delay(2000).fadeOut("slow", function()
+			{
+				$(this).remove();
+			});
+		});
+	}
