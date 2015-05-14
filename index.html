@@ -4,38 +4,61 @@
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
 		<script src="js/index.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/jquery.fullPage.css" />
+		<script type="text/javascript" src="js/jquery.fullPage.js"></script>
 		<script>
 			// ref: http://www.w3schools.com/JQuery/jquery_hide_show.asp
 			$(document).ready(function(){
-			    $("#showmap").click(function(){
-			        $("textarea").hide();
-			    });
-			    $("#showmap").click(function(){
-			        $("textarea").show();
-			    });
+
+			    //for fullPage
+				$('#fullpage').fullpage();
+
+				document.getElementById("inputAddress").focus();
+				document.getElementById("inputAddress").addEventListener("keydown", function(e) {
+				if (!e) { var e = window.event; }
+					//e.preventDefault(); // sometimes useful
+
+					// Enter is pressed
+					if (e.keyCode == 13) { buttonClicked(); }
+				}, false);
+
 			});
 		</script>
 	</head>
 <body>
-<img src="https://pbs.twimg.com/profile_images/378800000762572812/91ea09a6535666e18ca3c56f731f67ef.jpeg">
-	<h1 id = "greet">Welcome! Uber Button Generator</h1> 
-	<h2>Want customer to use Uber to go to your shop? </h2>
-	<h2>We are here to help!!</h2>
-
-	<p>Type your shop address</p>
-	<script src="js/index.js"></script>
-	<script> displayTitle() </script>
-	<input id="inputAddress" placeholder="address here"></input>
-	<button id="showmap" onclick="buttonClicked()">Show Map</button>
 
 
-   
 
+<div id="fullpage">
+    <div id="main" class="section">
+    	<img src="https://pbs.twimg.com/profile_images/378800000762572812/91ea09a6535666e18ca3c56f731f67ef.jpeg">
+		<h1 id = "greet">Welcome! Uber Button Generator</h1> 
+		<h2>Want customer to use Uber to go to your shop? </h2>
+		<h2>We are here to help!!</h2>
 
-    <div id="result">
-    	<textarea rows="10" cols="100" id="resultHtml"></textarea>
+		<p>Type your shop address</p>
+		<script> displayTitle(); </script>
+		<input id="inputAddress" placeholder="address here"></input>
+		<button id="showmap" onclick="buttonClicked()">Generate</button>
+
+    </div>
+    <div id="resultDiv" class="section" >
+	    <div id="result-text">
+
+    		<h2 align="left">Result</h2>
+		    <textarea rows="4" cols="80" id="resultHtml">This will be code to paste on your website.</textarea>
+	    </div>
 		<div id="map-canvas"></div>
-	</div>
+    </div>
+    <div class="section" style="background-color: #b0c4de;">
+
+    		<h2 align="left">About Us</h2>
+    	<!--<h2 style="position:absolute; top:0px; left:5%;">About Us</h2>-->
+
+    </div>
+</div>
+
+
 
  </body>
 </html>

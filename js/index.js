@@ -79,14 +79,18 @@ function buildHTML(templateFile, lat, lng, stringAddress){
 		var properties = {
 			dLat: lat,
 			dLng: lng,
-			dStringAddress: '"'+stringAddress+'"'
+			dStringAddress: stringAddress
 		};
 
 		htmlCode = applyTemplate(template, properties);
 
 		document.getElementById("resultHtml").innerHTML = htmlCode;
-		console.log( "Load was performed." );
+		//console.log( "Load was performed." );
 
+		//to scroll if we generated something
+		$.fn.fullpage.moveSectionDown();
+
+		//document.getElementById("resultHtml").focus();
 	});
 
 	//return "<div>some html code</div>";
@@ -99,7 +103,12 @@ function displayMap(lat, lng, divID){
 }
 
 function displayMap(lat, lng, stringAddress, divID){
+	//changed to static api
+
+
 	//this function display a map in the divID
+
+	
 	function initialize(lat, lng, stringAddress, divID) {
 		var myLatlng = new google.maps.LatLng(lat,lng);
 		var mapOptions = {
@@ -116,7 +125,11 @@ function displayMap(lat, lng, stringAddress, divID){
 		});
 	}
 	google.maps.event.addDomListener(window, 'load', initialize(lat, lng, stringAddress, divID));
+
+	
 }
+
+
 //To looks nicer 
 function displayTitle()
 {
@@ -131,6 +144,6 @@ function displayTitle()
 
   	bubbleShape = "circle"
 
-	drawName(myName, letterColors,bounceBubbles());
+	//drawName(myName, letterColors,bounceBubbles());
 }
 

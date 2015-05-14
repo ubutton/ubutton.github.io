@@ -7,7 +7,7 @@ html{
 }
 body
 {
-	background:url(http://tctechcrunch2011.files.wordpress.com/2013/10/uber_seo_car.jpg?w=1344&h=896);
+	background:url(../res/indexBG.png);
 	background-size:cover;
     background-position:center;
 	text-align: center;
@@ -25,10 +25,22 @@ h1.greet
 
 }
 #map-canvas {
-	height: 30%;
+	float: right;
+	height: 100%;
+	width: 50%;
 	margin: 0px;
-	padding: 0px
+	padding: 0px;
 }
+
+#result-text {
+
+	float: left;
+	height: 100%;
+	margin: 0px;
+	padding: 0px;
+
+}
+
 input[id="inputAddress"] {
     border:0;
     padding:10px;
