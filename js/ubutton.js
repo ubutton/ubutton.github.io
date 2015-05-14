@@ -247,11 +247,13 @@ function onButtonClicked(dropoff_address, dropoff_latitude, dropoff_longitude, p
 function buildButton(dStringAddress, dLat, dLng, cLat, cLng, imageURL, displayName, estimatedTime, estimatedPriceRange, productId, shouldDisplayPrice){
 
 
+
 	if (shouldDisplayPrice){
 		document.getElementById("ubutton").innerHTML = '<div id="ubutton" onclick=""><div id="ubutton-time" >IN ' + estimatedTime + ' MIN</div><div id="ubutton-price" >' + estimatedPriceRange + '</div></div>';
 
 		var priceLength = document.getElementById("ubutton-price").clientWidth; 
-		document.getElementById("ubutton-time").style.width = 280 - priceLength - 14 - 1*4;
+		$("#ubutton-time").width(280 - priceLength - 14 - 1*4);
+
 	} else {
 		document.getElementById("ubutton-time").innerHTML = "RIDE IN " + estimatedTime + " MIN";
 

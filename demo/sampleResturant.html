@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+      <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+      <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+   </head>
+   <body>
+      <div data-role="page" id="home">
+         <div data-role="header">
+            <h1>Restaurant de Ubutton</h1>
+            <div data-role="navbar">
+               <ul>
+                  <li><a href="#home">Home</a></li>
+                  <li><a href="#menu">Menu</a></li>
+                  <li><a href="#location">Location</a></li>
+               </ul>
+            </div>
+         </div>
+         <div data-role="main" class="ui-content" style="text-align: center;" >
+            <p>Welcome! I am just going to put some random food photos :)</p>
+            <p>
+               <img src="http://www.henit.ie/wp-content/uploads/2013/12/french_cuisine.jpeg" style="width:95%; transform: rotateY(180deg);"/>
+            </p>
+         </div>
+      </div>
+      <div data-role="page" id="menu">
+         <div data-role="header">
+            <h1>Restaurant de Ubutton</h1>
+            <div data-role="navbar">
+               <ul>
+                  <li><a href="#home">Home</a></li>
+                  <li><a href="#menu">Menu</a></li>
+                  <li><a href="#location">Location</a></li>
+               </ul>
+            </div>
+         </div>
+         <div data-role="main" class="ui-content" style="text-align: center;" >
+            <p>Menu</p>
+            <p>
+               <img src="https://victualling.files.wordpress.com/2014/07/thompsonsspa783.jpg" style="width:95%;"/>
+            </p>
+         </div>
+      </div>
+      <div data-role="page" id="location" >
+         <div data-role="header">
+            <h1>Restaurant de Ubutton</h1>
+            <div data-role="navbar">
+               <ul>
+                  <li><a href="#home">Home</a></li>
+                  <li><a href="#menu">Menu</a></li>
+                  <li><a href="#location">Location</a></li>
+               </ul>
+            </div>
+         </div>
+         <div data-role="main" class="ui-content" style="text-align: center;" >
+            <p>345 Spear Street, San Francisco, CA 94105</p>
+            <iframe
+               style="width:95%; height: 500px"
+               frameborder="0" style="border:0"
+               src="https://www.google.com/maps/embed/v1/view?key=AIzaSyD3xUkslr-u7pQEeA7mxFxvoQoOM_WA288
+               &center=37.789932,-122.390185
+               &zoom=18">
+            </iframe>
+            <!-- here is our code! -->
+            <link rel="stylesheet" type="text/css" href="https://ubutton.github.io/css/ubutton.css">
+            <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+            <script src="https://ubutton.github.io/js/ubutton.js"></script>
+            <script>generateUbutton(37.789932,-122.390185,"Google San Francisco");</script>
+         </div>
+      </div>
+   </body>
+</html>
