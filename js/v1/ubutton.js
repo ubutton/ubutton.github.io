@@ -170,7 +170,7 @@ function getInfoFromUber(dStringAddress, dLat, dLng, cLat, cLng){
 						var estimatedTime = Math.ceil(estimatedTimeInSec/60);
 
 						$.ajax({
-							url: "https://ancient-tor-1781.herokuapp.com/price?start_latitude="+cLat+"&start_longitude="+cLng+"&end_latitude=37.7298549&end_longitude=-122.4225971",
+							url: "https://ancient-tor-1781.herokuapp.com/price?start_latitude="+cLat+"&start_longitude="+cLng+"&end_latitude="+dLat+"&end_longitude="+dLng,
 							dataType: 'jsonp',
 							success: function(priceResult) {
 								var estimatedPriceRange="$0";
