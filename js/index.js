@@ -111,6 +111,20 @@ function displayMap(lat, lng, stringAddress, divID){
 	
 	function initialize(lat, lng, stringAddress, divID) {
 		var myLatlng = new google.maps.LatLng(lat,lng);
+
+
+
+		var stylesArray = [
+		  {
+		    "stylers": [
+		      { "gamma": 0.1 },
+		      { "lightness": -20 },
+		      { "hue": "#0088ff" },
+		      { "saturation": -75 }
+		    ]
+		  },{
+		  }
+		];
 		var mapOptions = {
 			zoom: 18,
 			center: myLatlng
@@ -123,6 +137,8 @@ function displayMap(lat, lng, stringAddress, divID){
 			map: map,
 			title: stringAddress
 		});
+
+		map.setOptions({styles: stylesArray});
 	}
 	google.maps.event.addDomListener(window, 'load', initialize(lat, lng, stringAddress, divID));
 

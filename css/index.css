@@ -45,7 +45,8 @@ h1.greet
 input[id="inputAddress"] {
     border:0;
     padding:10px;
-    font-size:20px;
+    font-size:13px;
+    width:30%;
 
       }
 input[id="placeholder"]{
