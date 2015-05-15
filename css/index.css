@@ -7,6 +7,7 @@ html{
 }
 body
 {
+	background-color: black;
 	background:url(../res/indexBG.png);
 	background-size:cover;
     background-position:center;
@@ -16,6 +17,38 @@ body
 
 
 }
+
+#demoDiv {
+	background:url(../res/demoBG.png);
+	background-size:cover;
+	background-position:center;
+
+}
+
+#iphoneHolder {
+	margin-left: 60%;
+	margin-right: 15%;
+	margin-top:10%;
+	margin-bottom:10%;
+	height: 100%;
+	background:url(../res/iphone.png);
+	background-size: contain;
+    background-repeat:no-repeat;
+}
+
+#iphoneScreen {
+	margin-left: 6.5%;
+	margin-right: 6.5%;
+	margin-top:10%;
+
+	height:100%;
+	background:url(../res/ubuttondemo.gif);
+	background-size: contain;
+    background-repeat:no-repeat;
+}
+
+
+
 h1.greet
 {
 	background-color: black;
@@ -26,7 +59,7 @@ h1.greet
 }
 #map-canvas {
 	position: fixed;
-	height: 100;
+	height: 100px;
 	width: 100%;
 	bottom: 0px;
 	margin: 0px;
